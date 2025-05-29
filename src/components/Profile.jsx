@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 function Profile() {
   const id = localStorage.getItem("id");
@@ -7,13 +9,19 @@ function Profile() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [profileImg, setProfileImg] = useState("");
-  const [user, setUser] = useState("")
+  const [user, setUser] = useState("");
+
+  let navigate = useNavigate();
+
+  function redirectPath() {
+    navigate("/");
+  }
 
   useEffect(() => {
     axios
       .get(`https://682199fa259dad2655afc100.mockapi.io/users/${id}`)
       .then((res) => {
-        setUser(res.data)
+        setUser(res.data);
         setUsername(res.data.username);
         setEmail(res.data.email);
         setProfileImg(res.data.profileImg);
@@ -21,21 +29,20 @@ function Profile() {
       });
   }, []);
 
-//   {
-//     "username": "user109",
-//     "password": "user109@user109.user109",
-//     "email": "user109@user109.user109",
-//     "posts": [],
-//     "id": "11",
-//     "profileImg": "https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg"
-// }
+  //   {
+  //     "username": "user109",
+  //     "password": "user109@user109.user109",
+  //     "email": "user109@user109.user109",
+  //     "posts": [],
+  //     "id": "11",
+  //     "profileImg": "https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg"
+  // }
 
   const updateData = () => {
+    localStorage.setItem("profileImg", profileImg);
+    localStorage.setItem("username", username)
 
-
-      localStorage.setItem("profileImg", profileImg);
-
-        axios({
+    axios({
       method: "put",
       url: `https://682199fa259dad2655afc100.mockapi.io/users/${id}`,
       data: {
@@ -44,14 +51,21 @@ function Profile() {
         email: email,
         posts: user.posts,
         id: user.id,
-        profileImg:profileImg
+        profileImg: profileImg,
       },
+    }).then(() => {
+      Swal.fire({
+        title: "updated successfully",
+        icon: "success",
+      })
+      redirectPath()
     })
-  };
+    
+  }
 
   return (
     <div className="flex flex-col lg:flex-row justify-around p-5">
-      <div className="bg-blue-100 lg:w-4/10 rounded-2xl p-5 flex flex-col  gap-5">
+      <div className="bg-blue-100 lg:w-4/10 rounded-2xl p-5 flex flex-col gap-5">
         <div className="flex flex-col gap-">
           <h1>username</h1>
           <input
@@ -86,7 +100,13 @@ function Profile() {
           confirm
         </button>
       </div>
-      {profileImg &&<img className="h-90 w-90 rounded-2xl mt-5 lg:mt-0" src={profileImg} alt="" />}
+      {profileImg && (
+        <img
+          className="h-90 w-90 rounded-2xl self-center mt-5 lg:mt-0"
+          src={profileImg}
+          alt=""
+        />
+      )}
     </div>
   );
 }

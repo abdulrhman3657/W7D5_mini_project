@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -32,7 +32,7 @@ function UpdateCard() {
         setName(res.data.name);
         setImage(res.data.image);
         console.log(res.data);
-      });
+      })
   }, []);
 
   const updateData = () => {

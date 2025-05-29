@@ -15,15 +15,7 @@ function UpdateCard() {
   function redirectPath() {
     navigate("/");
   }
-
-  //   {
-  //     "id": "5",
-  //     "image": "https://images.pexels.com/photos/29635023/pexels-photo-29635023/free-photo-of-serene-foggy-forest-overlooking-a-tranquil-lake.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
-  //     "name": "name1",
-  //     "gender": "Male",
-  //     "username": "user183"
-  // }
-
+  
   useEffect(() => {
     axios
       .get(`https://682199fa259dad2655afc100.mockapi.io/characters3/${id}`)

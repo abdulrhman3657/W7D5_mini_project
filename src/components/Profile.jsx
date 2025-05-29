@@ -26,17 +26,8 @@ function Profile() {
         setEmail(res.data.email);
         setProfileImg(res.data.profileImg);
         console.log(res.data);
-      });
-  }, []);
-
-  //   {
-  //     "username": "user109",
-  //     "password": "user109@user109.user109",
-  //     "email": "user109@user109.user109",
-  //     "posts": [],
-  //     "id": "11",
-  //     "profileImg": "https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg"
-  // }
+      })
+  }, [])
 
   const updateData = () => {
     localStorage.setItem("profileImg", profileImg);
